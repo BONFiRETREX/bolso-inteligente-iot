@@ -1,0 +1,5 @@
+# Copie estas propiedades a local.properties (no lo suba al repositorio).
+# La URL y la clave publicable se obtienen en Supabase: Connect > App Frameworks.
+SUPABASE_URL=https://tu-project-ref.supabase.co
+SUPABASE_PUBLISHABLE_KEY=sb_publishable_reemplazar_por_tu_clave
+SUPABASE_BAG_ID=bolso-demo-001

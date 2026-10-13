@@ -1,0 +1,14 @@
+# Configuración local y secretos
+android/local.properties
+supabase/functions/.env
+.env
+.env.local
+
+# Cachés y artefactos generados
+android/.gradle/
+android/.gradle-user-home/
+android/build/
+android/app/build/
+
+# Archivos locales de Android Studio
+android/.idea/

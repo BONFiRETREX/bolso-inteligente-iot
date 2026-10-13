@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "author": "Bolso Inteligente IoT",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "sensorLlaves",
+      "top": -31.9,
+      "left": -564.5,
+      "rotate": 270,
+      "attrs": { "distance": "33" }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "sensorBilletera",
+      "top": 342.5,
+      "left": -516.5,
+      "rotate": 270,
+      "attrs": { "distance": "5" }
+    },
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 158.3,
+      "left": 33.4,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfidLlaves",
+      "top": -55.56,
+      "left": -367.75,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfidBilletera",
+      "top": 312.45,
+      "left": -343.64,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "reedSim",
+      "top": 40,
+      "left": 345,
+      "attrs": { "bounce": "0" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btnArmado",
+      "top": 159.8,
+      "left": 345.6,
+      "attrs": { "color": "blue", "label": "ARMAR / DESARMAR", "key": "a", "bounce": "0" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledVerde",
+      "top": 335,
+      "left": 322,
+      "attrs": { "color": "green", "label": "ESTADO OK" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rVerde",
+      "top": 410,
+      "left": 327,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledRojo",
+      "top": 335,
+      "left": 438,
+      "attrs": { "color": "red", "label": "ALARMA" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rRojo",
+      "top": 410,
+      "left": 443,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "buzzer",
+      "top": 490,
+      "left": 380,
+      "attrs": { "mode": "smooth", "volume": "0.4" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "labelTitulo",
+      "top": -180,
+      "left": -150,
+      "attrs": { "text": "BOLSO INTELIGENTE IoT | ESP32 + 2 RFID + 2 HC-SR04 + REED" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "labelLlaves",
+      "top": -160,
+      "left": -380,
+      "attrs": { "text": "RFID 1 - LLAVES\nBlue Card -> TAP" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "labelCartera",
+      "top": 201.6,
+      "left": -326.4,
+      "attrs": { "text": "RFID 2 - BILLETERA\nGreen Card -> TAP" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "labelReed",
+      "top": -10,
+      "left": 290,
+      "attrs": { "text": "REED - APERTURA DEL BOLSO\nIzquierda = CERRADO" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "labelControl",
+      "top": 115,
+      "left": 285,
+      "attrs": { "text": "BOTON: ARMAR / DESARMAR" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "labelAvisos",
+      "top": 518.4,
+      "left": 441.6,
+      "attrs": {
+        "text": "CAPA DE SIMULACION ELECTRONICA\nResultados en Monitor Serie\nWiFi y app Android: siguiente etapa"
+      }
+    }
+  ],
+  "connections": [
+    [ "sensorLlaves:VCC", "esp:VIN", "red", [] ],
+    [ "sensorLlaves:GND", "esp:GND.1", "black", [] ],
+    [ "sensorLlaves:TRIG", "esp:D4", "green", [] ],
+    [ "sensorLlaves:ECHO", "esp:D34", "blue", [] ],
+    [ "sensorBilletera:VCC", "esp:VIN", "red", [] ],
+    [ "sensorBilletera:GND", "esp:GND.1", "black", [] ],
+    [ "sensorBilletera:TRIG", "esp:D33", "green", [] ],
+    [ "sensorBilletera:ECHO", "esp:D14", "blue", [] ],
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "rfidLlaves:3.3V", "esp:3V3", "red", [] ],
+    [ "rfidLlaves:GND", "esp:GND.1", "black", [] ],
+    [ "rfidLlaves:SCK", "esp:D18", "green", [] ],
+    [ "rfidLlaves:MISO", "esp:D19", "yellow", [] ],
+    [ "rfidLlaves:MOSI", "esp:D23", "blue", [] ],
+    [ "rfidLlaves:RST", "esp:D21", "purple", [] ],
+    [ "rfidLlaves:SDA", "esp:D5", "orange", [] ],
+    [ "rfidBilletera:3.3V", "esp:3V3", "red", [] ],
+    [ "rfidBilletera:GND", "esp:GND.1", "black", [] ],
+    [ "rfidBilletera:SCK", "esp:D18", "green", [] ],
+    [ "rfidBilletera:MISO", "esp:D19", "yellow", [] ],
+    [ "rfidBilletera:MOSI", "esp:D23", "blue", [] ],
+    [ "rfidBilletera:RST", "esp:D21", "purple", [] ],
+    [ "rfidBilletera:SDA", "esp:D13", "cyan", [] ],
+    [ "reedSim:2", "esp:D22", "teal", [] ],
+    [ "reedSim:1", "esp:GND.2", "black", [] ],
+    [ "btnArmado:1.r", "esp:D32", "purple", [] ],
+    [ "btnArmado:2.r", "esp:GND.2", "black", [] ],
+    [ "esp:D26", "rVerde:1", "green", [] ],
+    [ "rVerde:2", "ledVerde:A", "green", [] ],
+    [ "ledVerde:C", "esp:GND.1", "black", [] ],
+    [ "esp:D25", "rRojo:1", "red", [] ],
+    [ "rRojo:2", "ledRojo:A", "red", [] ],
+    [ "ledRojo:C", "esp:GND.1", "black", [] ],
+    [ "esp:D27", "buzzer:2", "purple", [] ],
+    [ "buzzer:1", "esp:GND.2", "black", [] ]
+  ],
+  "serialMonitor": { "display": "always" },
+  "dependencies": {}
+}
