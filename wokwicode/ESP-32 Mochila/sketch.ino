@@ -55,7 +55,7 @@ const byte uidBilletera[4] = {
 // La lógica electrónica funciona aunque esta capa esté desactivada.
 // La URL pública de la Edge Function ya está configurada. Tras desplegarla,
 // cambie CLOUD_SYNC_ENABLED a 1. No coloque service_role ni secretos en Wokwi público.
-#define CLOUD_SYNC_ENABLED 0
+#define CLOUD_SYNC_ENABLED 1
 
 // Solo para el simulador Wokwi. En un ESP32 físico se debe validar el
 // certificado TLS de Supabase y poner esta opción en 0.
