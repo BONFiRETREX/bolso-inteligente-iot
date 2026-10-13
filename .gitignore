@@ -8,6 +8,7 @@ supabase/.temp/
 # Cachés y artefactos generados
 android/.gradle/
 android/.gradle-user-home/
+android/.kotlin/
 android/build/
 android/app/build/
 
