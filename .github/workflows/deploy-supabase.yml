@@ -1,0 +1,57 @@
+name: Desplegar Supabase
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "supabase/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_REF: gcfusjuzczyftyslnitw
+
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Validar secretos requeridos
+        shell: bash
+        run: |
+          test -n "$SUPABASE_ACCESS_TOKEN" || {
+            echo "Falta el secreto SUPABASE_ACCESS_TOKEN." >&2
+            exit 1
+          }
+          test -n "$SUPABASE_DB_PASSWORD" || {
+            echo "Falta el secreto SUPABASE_DB_PASSWORD." >&2
+            exit 1
+          }
+
+      - name: Vincular el proyecto remoto
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF"
+
+      - name: Previsualizar migraciones
+        run: supabase db push --dry-run
+
+      - name: Aplicar migraciones
+        run: supabase db push
+
+      - name: Desplegar función de ingestión
+        run: supabase functions deploy ingest-bag-status --project-ref "$SUPABASE_PROJECT_REF"

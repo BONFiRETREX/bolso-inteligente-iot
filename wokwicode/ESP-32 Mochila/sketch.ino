@@ -53,8 +53,8 @@ const byte uidBilletera[4] = {
 // NUBE / SUPABASE
 // =====================================
 // La lógica electrónica funciona aunque esta capa esté desactivada.
-// Para una demostración con Wokwi, escriba la URL de la Edge Function y cambie
-// CLOUD_SYNC_ENABLED a 1. No coloque service_role ni secretos en Wokwi público.
+// La URL pública de la Edge Function ya está configurada. Tras desplegarla,
+// cambie CLOUD_SYNC_ENABLED a 1. No coloque service_role ni secretos en Wokwi público.
 #define CLOUD_SYNC_ENABLED 0
 
 // Solo para el simulador Wokwi. En un ESP32 físico se debe validar el
@@ -62,7 +62,8 @@ const byte uidBilletera[4] = {
 #define CLOUD_ALLOW_INSECURE_TLS 1
 
 const char* CLOUD_WIFI_SSID = "Wokwi-GUEST";
-const char* CLOUD_FUNCTION_URL = "";
+const char* CLOUD_FUNCTION_URL =
+  "https://gcfusjuzczyftyslnitw.supabase.co/functions/v1/ingest-bag-status";
 const char* CLOUD_BAG_ID = "bolso-demo-001";
 
 // Se admite únicamente para hardware o proyecto no público. Déjelo vacío

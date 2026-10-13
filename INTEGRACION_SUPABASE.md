@@ -28,6 +28,40 @@ secreto de la Edge Function. No active ese secreto para el enlace público.
 
 ## 1. Crear y desplegar Supabase
 
+### Ruta recomendada: GitHub Actions
+
+El repositorio incluye `.github/workflows/deploy-supabase.yml`. El flujo está
+preconfigurado para el proyecto `gcfusjuzczyftyslnitw` y solo se ejecuta al
+modificar `supabase/**` o cuando se inicia manualmente desde GitHub.
+
+1. En GitHub, abra `Settings → Secrets and variables → Actions` del
+   repositorio y cree estos dos secretos de repositorio:
+
+   - `SUPABASE_DB_PASSWORD`: la contraseña de base de datos elegida al crear
+     el proyecto Supabase.
+   - `SUPABASE_ACCESS_TOKEN`: un token personal **scoped** de Supabase. Limítelo
+     únicamente al proyecto `gcfusjuzczyftyslnitw`.
+
+2. Al crear el token scoped, conceda solo estos permisos:
+
+   - `Project Settings`: Read
+   - `API Keys`: Read
+   - `API Key Secrets`: Read
+   - `Edge Functions`: Read-write
+
+   La contraseña y el token no se suben al repositorio ni se comparten por
+   chat. GitHub los entrega cifrados únicamente al flujo de despliegue.
+
+3. Abra `Actions → Desplegar Supabase → Run workflow` y ejecútelo en `main`.
+   El flujo primero muestra las migraciones pendientes, después crea las
+   tablas/publicación Realtime y finalmente despliega `ingest-bag-status`.
+
+4. Debe terminar con éxito antes de activar el envío en Wokwi. Si falla,
+   descargue o copie únicamente el texto del registro de error, sin exponer
+   los secretos, y revíselo en el proyecto.
+
+### Alternativa: CLI local
+
 1. Cree un proyecto de Supabase desde su propia cuenta.
 2. Instale la CLI de Supabase si aún no la tiene e inicie sesión.
 3. Desde la raíz de este repositorio, ejecute:
@@ -56,12 +90,13 @@ Ese valor no debe usarse en el Wokwi público.
 
 ## 2. Configurar el sketch de Wokwi
 
-En wokwicode/ESP-32 Mochila/sketch.ino, cambie únicamente estas opciones:
+Cuando el flujo de GitHub termine correctamente, en
+`wokwicode/ESP-32 Mochila/sketch.ino` cambie únicamente estas opciones:
 
 ~~~cpp
 #define CLOUD_SYNC_ENABLED 1
 const char* CLOUD_FUNCTION_URL =
-  "https://TU_PROJECT_REF.supabase.co/functions/v1/ingest-bag-status";
+  "https://gcfusjuzczyftyslnitw.supabase.co/functions/v1/ingest-bag-status";
 ~~~
 
 Mantenga CLOUD_DEVICE_KEY vacío para la demo pública. La simulación conserva
